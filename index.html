@@ -1,0 +1,135 @@
+<!-- styles taken from http://www.bettermotherfuckingwebsite.com -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Near Miss Design Document</title>
+	<style type="text/css">
+		body {
+			margin: 40px auto;
+			max-width: 650px;
+			line-height: 1.6;
+			font-size: 18px;
+			color: #444;
+			padding: 0 10px
+		}
+
+		h1,
+		h2,
+		h3 {
+			line-height: 1.2
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Near Miss Design Document</h1>
+		<aside>A game where collision is fatal but near misses keep you going.</aside>
+		<p>
+			The game uses provides a single player challenge in which the player must navigate through a minefield with limited control
+			of the ship. The ship's primary means of control are through bounces off a player-controlled paddle.
+		</p>
+	</header>
+	<h2>Gameplay</h2>
+	<p>
+		<figure>
+			<img src="basic.svg" />
+			<figcaption>
+				The basic layout of the game. The ball starts going rightward toward the paddle slowly. The player controls this paddle directly
+				(
+				<b>see The Paddle below</b>). This allows for a good angle to be planned. The clustering and layout of the mines are
+				randomly determined, as is the y coordinate of the target. Note that the width of the minefield is not final or to scale
+				and will likely have to be tweaked.
+			</figcaption>
+		</figure>
+	</p>
+	<p>
+		<figure>
+			<img src="with-burners.svg" />
+			<figcaption>
+				Using the burners: When passing close by a mine (a near miss), one may activate the burners. These are on the top and bottom
+				sides of the ship and only extend momentarily. These will destroy the mine and collect its resources. This allows
+			</figcaption>
+		</figure>
+		<figure>
+			<img src="after-burners.svg" />
+			<figcaption>
+				After using the burners: The mine has now been destroyed.
+			</figcaption>
+		</figure>
+	</p>
+	<p>
+		<figure>
+			<img src="with-shield.svg" />
+			<figcaption>
+				Using the shield: When a mine collision appears to be unavoidable, one can activate the shield. This will protect the ship
+				from any damage and will teleport it back to the starting position if it hits a mine. Just like the burners, this is
+				only activated for a moment and disables activating the burners for a while.
+			</figcaption>
+		</figure>
+		<figure>
+			<img src="after-shield.svg" />
+			<figcaption>
+				After using the shield and hitting a mine: The ship's position is reset, the target is downsized and moved, and the mine
+				remains intact.
+			</figcaption>
+		</figure>
+	</p>
+	<p>
+		If the player manages to hit the target, the player has cleared that stage. Otherwise, the player bounces off all walls with
+		conservation of momentum.
+	</p>
+	<p>
+		The idea is that the player is trying to clear an area in front of the target so they may hit it easily. Additionally, clearing
+		more mines will increase score. However, hitting mines is obviously not desired. Teleporting away makes the game a little
+		bit harder and hurts the progress you made on a certain section of the minefield. Also, it diminishes you score.
+	</p>
+	<p>
+		The player must use skill to ensure they activate the burners only when performing a near miss and do not teleport when it
+		is not necessary. Futhermore, they must know how to use the paddle well to get good routes through the minefield.
+	</p>
+	<h2>The Paddle</h2>
+	<p>
+		The paddle is magical. This is very important. Instead of conserving momentum, the paddle always launches the ship away at
+		predicatable angles. The image provided from http://graphics.cs.cmu.edu/courses/15-466-f17/game0-design/ shows exactly
+		how the paddle will launch the ship, no matter what angle the ship comes at it.
+		<figure>
+			<img src="angle.png" />
+			<figcaption>
+				The magic paddle always launches the ship at angles like this, no matter the approach. The further from the center, the more
+				obtuse the angle.
+			</figcaption>
+		</figure>
+	</p>
+	<h2>Win/Loss Conditions</h2>
+	<p>
+		The ship only has a finite amount of fuel. Activating the burners or the shields drains this. Successfully burning a mine
+		does collect some more fuel for the ship. Fuel also is drained overtime as the ship is moving through space (although this
+		is a very small amount compared to burner/shield activation).
+	</p>
+	<p>
+		The score of the player will be their fuel after hitting the target. If the player runs out of fuel, they lose.
+	</p>
+	<p>
+		I think difficulty is controlled well by three fronts:
+		<ul>
+			<li>Number of mines</li>
+			<li>Ball speed</li>
+			<li>Global scaling</li>
+		</ul>
+		I ignore (at least for now) any mine movement because that seems very hard for the player.
+	</p>
+	<p>Different game modes or progressive difficulty could be constructed based on how tweaking these variables.</p>
+	<h2>Controls</h2>
+	<ul>
+		<li>Mouse Y axis: move paddle</li>
+		<li>Left mouse click: activate shield</li>
+		<li>Right mouse click: activate burners</li>
+	</ul>
+</body>
+
+</html>
